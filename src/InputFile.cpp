@@ -56,7 +56,7 @@ void InputFile::readFile()
             this->items.push_back({profit, weight});
         }
     }
-    print();
+    // print();
 }
 
 vector<pair<int, int>> InputFile::getItems()
