@@ -9,8 +9,11 @@ class InputFile
 {
 private:
     string fileName;
-    vector<pair<int, int>> items;
-    pair<int, int> header;
+    int numberOfItems;
+    int maxWeight;
+    vector<int> profits;
+    vector<int> weights;
+
     void print();
     void printName();
 
@@ -19,6 +22,8 @@ public:
     ~InputFile();
     void readFile();
 
-    vector<pair<int, int>> getItems();
-    pair<int, int> getHeader();
+    vector<int> getProfits();
+    vector<int> getWeights();
+    int getNumberOfItems();
+    int getMaxWeight();
 };

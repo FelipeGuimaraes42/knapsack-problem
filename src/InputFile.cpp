@@ -20,18 +20,19 @@ void InputFile::printName()
 
 void InputFile::print()
 {
-    cout << this->header.first << " " << this->header.second << endl;
+    cout << this->numberOfItems << " " << this->maxWeight << endl;
 
-    for (int i = 0; i < this->items.size(); i++)
+    for (int i = 0; i < this->numberOfItems; i++)
     {
-        cout << this->items.at(i).first << " " << this->items.at(i).second << endl;
+        cout << this->profits.at(i) << " " << this->weights.at(i) << endl;
     }
 }
 
 void InputFile::readFile()
 {
     printName();
-    this->items.clear();
+    this->profits.clear();
+    this->weights.clear();
 
     ifstream file;
     file.open(this->fileName);
@@ -39,31 +40,40 @@ void InputFile::readFile()
     int profit, weight;
 
     file >> word;
-    int numberOfItems = stoi(word);
+    this->numberOfItems = stoi(word);
 
     file >> word;
-    int maxWeight = stoi(word);
+    this->maxWeight = stoi(word);
 
-    this->header = {numberOfItems, maxWeight};
-
-    while (file >> word && word != "EOF")
+    for (int i = 0; i < this->numberOfItems; i++)
     {
+        file >> word;
         profit = stoi(word);
         file >> word;
         weight = stoi(word);
-        if (profit > 0 && weight > 0)
-        {
-            this->items.push_back({profit, weight});
-        }
+
+        this->profits.push_back(profit);
+        this->weights.push_back(weight);
     }
     // print();
 }
 
-vector<pair<int, int>> InputFile::getItems()
+vector<int> InputFile::getProfits()
 {
-    return this->items;
+    return this->profits;
 }
-pair<int, int> InputFile::getHeader()
+
+vector<int> InputFile::getWeights()
 {
-    return this->header;
+    return this->weights;
+}
+
+int InputFile::getNumberOfItems()
+{
+    return this->numberOfItems;
+}
+
+int InputFile::getMaxWeight()
+{
+    return this->maxWeight;
 }
