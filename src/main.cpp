@@ -16,7 +16,9 @@ int main(int argc, char **argv)
     int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
                               file.getWeights(), file.getProfits());
 
-    cout << result << endl;
+    cout << "Number of Items: " << file.getNumberOfItems() << "\n"
+         << "Knapsack Size: " << file.getMaxWeight() << "\n"
+         << "Profit: " << result << endl;
 
     return 0;
 }
