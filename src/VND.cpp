@@ -1,16 +1,26 @@
 #include "include/VND.hpp"
 
-VND::VND(vector<pair<int, int>> points, string weightType)
+VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
 {
-    this->points = points;
-    this->weightType = weightType;
+    this->n = n;
+    this->maxWeight = maxWeight;
+    this->profits = profits;
+    this->weights = weights;
 }
 
-VND::~VND()
-{
+VND::~VND() {}
+
+KPSolution VND::getInitialSolution() {
+    vector<int> items;
+    int solution = 0;
+    for(int i = 0; i < this->n; i++) {
+        items.push_back(0);
+    }
+
+    return KPSolution(items, solution);
 }
 
-double VND::getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj)
+/* double VND::getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj)
 {
     double xd = xiYi.first - xjYj.first;
     double yd = xiYi.second - xjYj.second;
@@ -128,6 +138,7 @@ double VND::getCycleSize(vector<pair<int, int>> points)
 
     return cycleSize;
 }
+*/
 
 KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 {
@@ -339,9 +350,9 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
     return bestSolution;
 }
 
-double VND::tsp()
+int VND::kp()
 {
-    KPSolution initialSolution = this->getConstructiveSolution();
+    KPSolution initialSolution = this->getInitialSolution();
 
     KPSolution solution(initialSolution.getItems(), initialSolution.getSolutionValue());
     int k = 0;

@@ -13,20 +13,23 @@ using namespace std;
 class VND
 {
 private:
-    vector<pair<int, int>> points;
-    string weightType;
+    int n;
+    int maxWeight;
+    vector<int> profits;
+    vector<int> weights;
 
-    double getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
-    double getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
-    double getCycleSize(vector<pair<int, int>> points);
+    // double getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
+    // double getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
+    // double getCycleSize(vector<pair<int, int>> points);
+    // KPSolution getConstructiveSolution();
 
-    KPSolution getConstructiveSolution();
+    KPSolution getInitialSolution();
     KPSolution getTwoOptSolution(KPSolution previousSolution);
     KPSolution getThreeOptSolution(KPSolution previousSolution);
     KPSolution getFourOptSolution(KPSolution previousSolution);
 
 public:
-    VND(vector<pair<int, int>> points, string weightType);
+    VND(int maxWeight, int n, vector<int> weights, vector<int> profits);
     ~VND();
-    double tsp();
+    int kp();
 };
