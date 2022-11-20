@@ -6,7 +6,7 @@
 #include "KPSolution.hpp"
 
 #define INF 0x3f3f3f3f
-#define MAX_TENTATIVES 3
+#define MAX_TENTATIVES 2
 
 using namespace std;
 
@@ -22,8 +22,11 @@ private:
     // double getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
     // double getCycleSize(vector<pair<int, int>> points);
     // KPSolution getConstructiveSolution();
+    
+    KPSolution getValue(vector<bool>);
 
     KPSolution getInitialSolution();
+    KPSolution getRandomSolution();
     KPSolution getTwoOptSolution(KPSolution previousSolution);
     KPSolution getThreeOptSolution(KPSolution previousSolution);
     KPSolution getFourOptSolution(KPSolution previousSolution);

@@ -11,6 +11,8 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    srand(time(NULL));
+    
     InputFile file(argv[1]);
     file.readFile();
 

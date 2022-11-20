@@ -37,7 +37,6 @@ void RandomizedGreedy::removeItem(int position)
 
 int RandomizedGreedy::calculate()
 {
-    srand(time(NULL));
     int result = 0;
     int weight = 0;
     int n = this->n - 1;

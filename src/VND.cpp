@@ -22,6 +22,28 @@ KPSolution VND::getInitialSolution()
     return KPSolution(items, solution);
 }
 
+KPSolution VND::getRandomSolution()
+{
+    vector<bool> items;
+    int solution = 0;
+    int weight = 0;
+
+    for (int i = 0; i < this->n; i++)
+    {
+        int randomBool = rand() % 2;
+        items.push_back(randomBool);
+        int aux = weight + this->weights.at(i);
+
+        if (randomBool && aux <= this->maxWeight)
+        {
+            solution += this->profits.at(i);
+            weight = aux;
+        }
+    }
+
+    return KPSolution(items, solution);
+}
+
 /* double VND::getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj)
 {
     double xd = xiYi.first - xjYj.first;
@@ -355,7 +377,7 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
 
 int VND::calculate()
 {
-    KPSolution initialSolution = this->getInitialSolution();
+    KPSolution initialSolution = this->getRandomSolution();
 
     KPSolution solution(initialSolution.getItems(), initialSolution.getSolutionValue());
     int k = 0;
@@ -367,13 +389,9 @@ int VND::calculate()
             {
                 solution = this->getTwoOptSolution(solution);
             }
-            else if (k == 1)
-            {
-                solution = this->getThreeOptSolution(solution);
-            }
             else
             {
-                solution = this->getFourOptSolution(solution);
+                solution = this->getThreeOptSolution(solution);
             }
 
             if (solution.getSolutionValue() < minSolution)
