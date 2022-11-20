@@ -13,19 +13,20 @@ int main(int argc, char **argv)
     InputFile file(argv[1]);
     file.readFile();
 
-    DynamicProgramming dp;
-    int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
-                              file.getWeights(), file.getProfits());
+    // DynamicProgramming dp;
+    // int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
+    //                           file.getWeights(), file.getProfits());
 
-    cout << "Dynamic Programming\n"
-         << "Number of Items: " << file.getNumberOfItems() << "\n"
-         << "Knapsack Size: " << file.getMaxWeight() << "\n"
-         << "Profit: " << result << "\n"
-         << endl;
+    // cout << "Dynamic Programming\n"
+    //      << "Number of Items: " << file.getNumberOfItems() << "\n"
+    //      << "Knapsack Size: " << file.getMaxWeight() << "\n"
+    //      << "Profit: " << result << "\n"
+    //      << endl;
 
     RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
                         file.getWeights(), file.getProfits());
-    result = rg.calculate();
+
+    int result = rg.calculate();
 
     cout << "Randomized Greedy\n"
          << "Number of Items: " << file.getNumberOfItems() << "\n"
