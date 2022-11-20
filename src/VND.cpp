@@ -361,8 +361,7 @@ int VND::calculate()
     int k = 0;
     double minSolution = solution.getSolutionValue();
 
-    /*
-        while (k < MAX_TENTATIVES)
+    /*while (k < MAX_TENTATIVES)
         {
             if (k == 0)
             {
@@ -388,5 +387,6 @@ int VND::calculate()
             }
         }
     */
+
     return solution.getSolutionValue();
 }
