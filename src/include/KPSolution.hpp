@@ -9,6 +9,7 @@ private:
     int solutionValue;
 
 public:
+    KPSolution();
     KPSolution(vector<int>, int);
     ~KPSolution();
 
