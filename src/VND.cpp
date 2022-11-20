@@ -12,7 +12,7 @@ VND::~VND() {}
 
 KPSolution VND::getInitialSolution()
 {
-    vector<int> items;
+    vector<bool> items;
     int solution = 0;
     for (int i = 0; i < this->n; i++)
     {

@@ -2,7 +2,7 @@
 
 KPSolution::KPSolution() {}
 
-KPSolution::KPSolution(vector<int> items, int solution)
+KPSolution::KPSolution(vector<bool> items, int solution)
 {
     this->items = items;
     this->solutionValue = solution;
@@ -12,7 +12,7 @@ KPSolution::~KPSolution()
 {
 }
 
-void KPSolution::setItems(vector<int> items)
+void KPSolution::setItems(vector<bool> items)
 {
     this->items = items;
 }
@@ -22,7 +22,7 @@ void KPSolution::setSolutionValue(int solution)
     this->solutionValue = solution;
 }
 
-vector<int> KPSolution::getItems()
+vector<bool> KPSolution::getItems()
 {
     return this->items;
 }

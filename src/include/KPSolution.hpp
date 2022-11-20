@@ -5,17 +5,17 @@ using namespace std;
 class KPSolution
 {
 private:
-    vector<int> items;
+    vector<bool> items;
     int solutionValue;
 
 public:
     KPSolution();
-    KPSolution(vector<int>, int);
+    KPSolution(vector<bool>, int);
     ~KPSolution();
 
-    void setItems(vector<int>);
+    void setItems(vector<bool>);
     void setSolutionValue(int);
 
-    vector<int> getItems();
+    vector<bool> getItems();
     int getSolutionValue();
 };
