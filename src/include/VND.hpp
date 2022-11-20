@@ -31,5 +31,5 @@ private:
 public:
     VND(int maxWeight, int n, vector<int> weights, vector<int> profits);
     ~VND();
-    int kp();
+    int calculate();
 };

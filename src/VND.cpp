@@ -10,10 +10,12 @@ VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
 
 VND::~VND() {}
 
-KPSolution VND::getInitialSolution() {
+KPSolution VND::getInitialSolution()
+{
     vector<int> items;
     int solution = 0;
-    for(int i = 0; i < this->n; i++) {
+    for (int i = 0; i < this->n; i++)
+    {
         items.push_back(0);
     }
 
@@ -140,7 +142,7 @@ double VND::getCycleSize(vector<pair<int, int>> points)
 }
 */
 
-KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
+/* KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 {
     KPSolution newSolution;
     double minSolution = bestSolution.getSolutionValue();
@@ -349,8 +351,9 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
     }
     return bestSolution;
 }
+*/
 
-int VND::kp()
+int VND::calculate()
 {
     KPSolution initialSolution = this->getInitialSolution();
 
@@ -358,31 +361,32 @@ int VND::kp()
     int k = 0;
     double minSolution = solution.getSolutionValue();
 
-    while (k < MAX_TENTATIVES)
-    {
-        if (k == 0)
+    /*
+        while (k < MAX_TENTATIVES)
         {
-            solution = this->getTwoOptSolution(solution);
-        }
-        else if (k == 1)
-        {
-            solution = this->getThreeOptSolution(solution);
-        }
-        else
-        {
-            solution = this->getFourOptSolution(solution);
-        }
+            if (k == 0)
+            {
+                solution = this->getTwoOptSolution(solution);
+            }
+            else if (k == 1)
+            {
+                solution = this->getThreeOptSolution(solution);
+            }
+            else
+            {
+                solution = this->getFourOptSolution(solution);
+            }
 
-        if (solution.getSolutionValue() < minSolution)
-        {
-            minSolution = solution.getSolutionValue();
-            k = 0;
+            if (solution.getSolutionValue() < minSolution)
+            {
+                minSolution = solution.getSolutionValue();
+                k = 0;
+            }
+            else
+            {
+                k++;
+            }
         }
-        else
-        {
-            k++;
-        }
-    }
-
+    */
     return solution.getSolutionValue();
 }

@@ -34,14 +34,14 @@ int main(int argc, char **argv)
          << "Knapsack Size: " << file.getMaxWeight() << "\n"
          << "Profit: " << result << endl;
 
-    // VND vnd(file.getMaxWeight(), file.getNumberOfItems(),
-    //         file.getWeights(), file.getProfits());
-    // result = vnd.kp();
+    VND vnd(file.getMaxWeight(), file.getNumberOfItems(),
+            file.getWeights(), file.getProfits());
+    result = vnd.calculate();
 
-    // cout << "VND\n"
-    //      << "Number of Items: " << file.getNumberOfItems() << "\n"
-    //      << "Knapsack Size: " << file.getMaxWeight() << "\n"
-    //      << "Profit: " << result << endl;
+    cout << "VND\n"
+         << "Number of Items: " << file.getNumberOfItems() << "\n"
+         << "Knapsack Size: " << file.getMaxWeight() << "\n"
+         << "Profit: " << result << endl;
 
     return 0;
 }
