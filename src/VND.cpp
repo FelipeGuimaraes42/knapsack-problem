@@ -132,13 +132,13 @@ double VND::getCycleSize(vector<pair<int, int>> points)
 KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 {
     KPSolution newSolution;
-    double minSolution = bestSolution.getValue();
+    double minSolution = bestSolution.getSolutionValue();
     bool isSolutionImproved = true;
 
     while (isSolutionImproved)
     {
         isSolutionImproved = false;
-        int size = bestSolution.getPoints().size();
+        int size = bestSolution.getItems().size();
 
         for (int i = 0; i < size - 1; i++)
         {
@@ -147,12 +147,12 @@ KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
                 vector<pair<int, int>> twoOptPoints, auxPoints;
                 for (int k = 0; k < i; k++)
                 {
-                    twoOptPoints.push_back(bestSolution.getPoints().at(k));
+                    twoOptPoints.push_back(bestSolution.getItems().at(k));
                 }
 
                 for (int k = i; k < j; k++)
                 {
-                    auxPoints.push_back(bestSolution.getPoints().at(k));
+                    auxPoints.push_back(bestSolution.getItems().at(k));
                 }
 
                 reverse(auxPoints.begin(), auxPoints.end());
@@ -164,7 +164,7 @@ KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 
                 for (int k = j; k < size; k++)
                 {
-                    twoOptPoints.push_back(bestSolution.getPoints().at(k));
+                    twoOptPoints.push_back(bestSolution.getItems().at(k));
                 }
 
                 double twoOptValue = getCycleSize(twoOptPoints);
@@ -172,10 +172,10 @@ KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
                 newSolution.setPoints(twoOptPoints);
                 newSolution.setValue(twoOptValue);
 
-                if (newSolution.getValue() < minSolution)
+                if (newSolution.getSolutionValue() < minSolution)
                 {
                     bestSolution = newSolution;
-                    minSolution = bestSolution.getValue();
+                    minSolution = bestSolution.getSolutionValue();
 
                     isSolutionImproved = true;
                 }
@@ -188,9 +188,9 @@ KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
 {
     KPSolution newSolution;
-    double minSolution = bestSolution.getValue();
+    double minSolution = bestSolution.getSolutionValue();
     bool isSolutionImproved = true;
-    int size = bestSolution.getPoints().size();
+    int size = bestSolution.getItems().size();
 
     while (isSolutionImproved)
     {
@@ -205,17 +205,17 @@ KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
                     vector<pair<int, int>> a, b, c;
                     for (int k = 0; k < i; k++)
                     {
-                        a.push_back(bestSolution.getPoints().at(k));
+                        a.push_back(bestSolution.getItems().at(k));
                     }
 
                     for (int k = i; k < j; k++)
                     {
-                        b.push_back(bestSolution.getPoints().at(k));
+                        b.push_back(bestSolution.getItems().at(k));
                     }
 
                     for (int k = j; k < l; k++)
                     {
-                        c.push_back(bestSolution.getPoints().at(k));
+                        c.push_back(bestSolution.getItems().at(k));
                     }
 
                     reverse(b.begin(), b.end());
@@ -233,7 +233,7 @@ KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
 
                     for (int k = l; k < size; k++)
                     {
-                        a.push_back(bestSolution.getPoints().at(k));
+                        a.push_back(bestSolution.getItems().at(k));
                     }
 
                     double threeOptValue = getCycleSize(a);
@@ -241,10 +241,10 @@ KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
                     newSolution.setPoints(a);
                     newSolution.setValue(threeOptValue);
 
-                    if (newSolution.getValue() < minSolution)
+                    if (newSolution.getSolutionValue() < minSolution)
                     {
                         bestSolution = newSolution;
-                        minSolution = bestSolution.getValue();
+                        minSolution = bestSolution.getSolutionValue();
 
                         isSolutionImproved = true;
                     }
@@ -258,9 +258,9 @@ KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
 KPSolution VND::getFourOptSolution(KPSolution bestSolution)
 {
     KPSolution newSolution;
-    double minSolution = bestSolution.getValue();
+    double minSolution = bestSolution.getSolutionValue();
     bool isSolutionImproved = true;
-    int size = bestSolution.getPoints().size();
+    int size = bestSolution.getItems().size();
 
     while (isSolutionImproved)
     {
@@ -277,22 +277,22 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
                         vector<pair<int, int>> a, b, c, d;
                         for (int k = 0; k < i; k++)
                         {
-                            a.push_back(bestSolution.getPoints().at(k));
+                            a.push_back(bestSolution.getItems().at(k));
                         }
 
                         for (int k = i; k < j; k++)
                         {
-                            b.push_back(bestSolution.getPoints().at(k));
+                            b.push_back(bestSolution.getItems().at(k));
                         }
 
                         for (int k = j; k < l; k++)
                         {
-                            c.push_back(bestSolution.getPoints().at(k));
+                            c.push_back(bestSolution.getItems().at(k));
                         }
 
                         for (int k = l; k < m; k++)
                         {
-                            d.push_back(bestSolution.getPoints().at(k));
+                            d.push_back(bestSolution.getItems().at(k));
                         }
 
                         reverse(b.begin(), b.end());
@@ -316,7 +316,7 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
 
                         for (int k = l; k < size; k++)
                         {
-                            a.push_back(bestSolution.getPoints().at(k));
+                            a.push_back(bestSolution.getItems().at(k));
                         }
 
                         double fourOptValue = getCycleSize(a);
@@ -324,10 +324,10 @@ KPSolution VND::getFourOptSolution(KPSolution bestSolution)
                         newSolution.setPoints(a);
                         newSolution.setValue(fourOptValue);
 
-                        if (newSolution.getValue() < minSolution)
+                        if (newSolution.getSolutionValue() < minSolution)
                         {
                             bestSolution = newSolution;
-                            minSolution = bestSolution.getValue();
+                            minSolution = bestSolution.getSolutionValue();
 
                             isSolutionImproved = true;
                         }
@@ -343,9 +343,9 @@ double VND::tsp()
 {
     KPSolution initialSolution = this->getConstructiveSolution();
 
-    KPSolution solution(initialSolution.getValue(), initialSolution.getPoints());
+    KPSolution solution(initialSolution.getItems(), initialSolution.getSolutionValue());
     int k = 0;
-    double minSolution = solution.getValue();
+    double minSolution = solution.getSolutionValue();
 
     while (k < MAX_TENTATIVES)
     {
@@ -362,9 +362,9 @@ double VND::tsp()
             solution = this->getFourOptSolution(solution);
         }
 
-        if (solution.getValue() < minSolution)
+        if (solution.getSolutionValue() < minSolution)
         {
-            minSolution = solution.getValue();
+            minSolution = solution.getSolutionValue();
             k = 0;
         }
         else
@@ -373,5 +373,5 @@ double VND::tsp()
         }
     }
 
-    return solution.getValue();
+    return solution.getSolutionValue();
 }
