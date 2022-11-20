@@ -31,7 +31,7 @@ double VND::getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int
     return tij;
 }
 
-TSPSolution VND::getConstructiveSolution()
+KPSolution VND::getConstructiveSolution()
 {
     srand(time(0));
     int n = this->points.size();
@@ -95,7 +95,7 @@ TSPSolution VND::getConstructiveSolution()
 
     solutionValue += (this->weightType == "EUC_2D" ? getEuclideanDistance(this->points[first], this->points[u]) : getPseudoEuclideanDistance(this->points[first], this->points[u]));
 
-    TSPSolution solution(solutionValue, solutionPoints);
+    KPSolution solution(solutionValue, solutionPoints);
 
     return solution;
 }
@@ -129,9 +129,9 @@ double VND::getCycleSize(vector<pair<int, int>> points)
     return cycleSize;
 }
 
-TSPSolution VND::getTwoOptSolution(TSPSolution bestSolution)
+KPSolution VND::getTwoOptSolution(KPSolution bestSolution)
 {
-    TSPSolution newSolution;
+    KPSolution newSolution;
     double minSolution = bestSolution.getValue();
     bool isSolutionImproved = true;
 
@@ -185,9 +185,9 @@ TSPSolution VND::getTwoOptSolution(TSPSolution bestSolution)
     return bestSolution;
 }
 
-TSPSolution VND::getThreeOptSolution(TSPSolution bestSolution)
+KPSolution VND::getThreeOptSolution(KPSolution bestSolution)
 {
-    TSPSolution newSolution;
+    KPSolution newSolution;
     double minSolution = bestSolution.getValue();
     bool isSolutionImproved = true;
     int size = bestSolution.getPoints().size();
@@ -255,9 +255,9 @@ TSPSolution VND::getThreeOptSolution(TSPSolution bestSolution)
     return bestSolution;
 }
 
-TSPSolution VND::getFourOptSolution(TSPSolution bestSolution)
+KPSolution VND::getFourOptSolution(KPSolution bestSolution)
 {
-    TSPSolution newSolution;
+    KPSolution newSolution;
     double minSolution = bestSolution.getValue();
     bool isSolutionImproved = true;
     int size = bestSolution.getPoints().size();
@@ -341,9 +341,9 @@ TSPSolution VND::getFourOptSolution(TSPSolution bestSolution)
 
 double VND::tsp()
 {
-    TSPSolution initialSolution = this->getConstructiveSolution();
+    KPSolution initialSolution = this->getConstructiveSolution();
 
-    TSPSolution solution(initialSolution.getValue(), initialSolution.getPoints());
+    KPSolution solution(initialSolution.getValue(), initialSolution.getPoints());
     int k = 0;
     double minSolution = solution.getValue();
 

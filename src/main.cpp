@@ -5,6 +5,7 @@
 #include "include/DynamicProgramming.hpp"
 #include "include/InputFile.hpp"
 #include "include/RandomizedGreedy.hpp"
+#include "include/VND.hpp"
 
 using namespace std;
 
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
          << "Number of Items: " << file.getNumberOfItems() << "\n"
          << "Knapsack Size: " << file.getMaxWeight() << "\n"
          << "Profit: " << result << endl;
+
+    VND vnd();
 
     return 0;
 }

@@ -3,8 +3,7 @@
 #include <string>
 #include <time.h>
 #include <vector>
-
-#include "TSPSolution.hpp"
+#include "KPSolution.hpp"
 
 #define INF 0x3f3f3f3f
 #define MAX_TENTATIVES 3
@@ -21,10 +20,10 @@ private:
     double getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
     double getCycleSize(vector<pair<int, int>> points);
 
-    TSPSolution getConstructiveSolution();
-    TSPSolution getTwoOptSolution(TSPSolution previousSolution);
-    TSPSolution getThreeOptSolution(TSPSolution previousSolution);
-    TSPSolution getFourOptSolution(TSPSolution previousSolution);
+    KPSolution getConstructiveSolution();
+    KPSolution getTwoOptSolution(KPSolution previousSolution);
+    KPSolution getThreeOptSolution(KPSolution previousSolution);
+    KPSolution getFourOptSolution(KPSolution previousSolution);
 
 public:
     VND(vector<pair<int, int>> points, string weightType);
