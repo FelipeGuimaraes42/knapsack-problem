@@ -1,7 +1,9 @@
 #include "include/KPSolution.hpp"
 
-KPSolution::KPSolution()
+KPSolution::KPSolution(vector<int> items, int solution)
 {
+    this->items = items;
+    this->solutionValue = solution;
 }
 
 KPSolution::~KPSolution()
