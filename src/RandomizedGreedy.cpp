@@ -57,6 +57,25 @@ int RandomizedGreedy::calculate()
         removeItem(index);
         n--;
     }
+    
+    int aux = weight + this->weights.at(this->sortedProfitsByWeight.at(0).first);
+
+    if (aux <= this->maxWeight)
+    {
+        result += this->profits.at(this->sortedProfitsByWeight.at(0).first);
+    }
 
     return result;
 }
+
+// if (!this->sortedProfitsByWeight.empty())
+//     {
+//         cout << "Entrei aqui!! Tamanho da lista: " << this->sortedProfitsByWeight.size() << endl;
+//         int aux = weight + this->weights.at(this->sortedProfitsByWeight.at(0).first);
+
+//         if (aux <= this->maxWeight)
+//         {
+//             result += this->profits.at(this->sortedProfitsByWeight.at(0).first);
+//             weight = aux;
+//         }
+//     }
