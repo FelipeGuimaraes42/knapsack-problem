@@ -6,16 +6,19 @@ class KPSolution
 {
 private:
     vector<bool> items;
-    int solutionValue;
+    int value;
+    int weight;
 
 public:
     KPSolution();
-    KPSolution(vector<bool>, int);
+    KPSolution(vector<bool>, int, int);
     ~KPSolution();
 
     void setItems(vector<bool>);
-    void setSolutionValue(int);
+    void setValue(int);
+    void setWeight(int);
 
     vector<bool> getItems();
-    int getSolutionValue();
+    int getValue();
+    int getWeight();
 };

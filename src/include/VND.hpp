@@ -18,18 +18,11 @@ private:
     vector<int> profits;
     vector<int> weights;
 
-    // double getEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
-    // double getPseudoEuclideanDistance(const pair<int, int> xiYi, const pair<int, int> xjYj);
-    // double getCycleSize(vector<pair<int, int>> points);
-    // KPSolution getConstructiveSolution();
-    
-    KPSolution getValue(vector<bool>);
-
     KPSolution getInitialSolution();
     KPSolution getRandomSolution();
-    KPSolution getTwoOptSolution(KPSolution previousSolution);
-    KPSolution getThreeOptSolution(KPSolution previousSolution);
-    KPSolution getFourOptSolution(KPSolution previousSolution);
+    int getKnapsackSize(vector<bool>);
+    KPSolution getAddOneDropOne(KPSolution previousSolution);
+    KPSolution getAddTwoDropOne(KPSolution previousSolution);
 
 public:
     VND(int maxWeight, int n, vector<int> weights, vector<int> profits);
