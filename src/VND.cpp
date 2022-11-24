@@ -10,7 +10,7 @@ VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
 
 VND::~VND() {}
 
-KPSolution VND::getInitialSolution()
+KPSolution VND::getEmptyKnapsack()
 {
     vector<bool> items;
     int solution = 0;
@@ -21,6 +21,23 @@ KPSolution VND::getInitialSolution()
     }
 
     return KPSolution(items, solution, weight);
+}
+
+pair<int, int> VND::getKnapsackDetails(vector<bool> items)
+{
+    int profit = 0;
+    int weight = 0;
+
+    for (int i = 0; i < this->n; i++)
+    {
+        if (items.at(i))
+        {
+            profit += this->profits.at(i);
+            weight += this->weights.at(i);
+        }
+    }
+
+    return {profit, weight};
 }
 
 KPSolution VND::getRandomSolution()
@@ -55,150 +72,6 @@ KPSolution VND::getRandomSolution()
     return KPSolution(items, solution, weight);
 }
 
-pair<int, int> VND::getKnapsackDetails(vector<bool> items)
-{
-    int profit = 0;
-    int weight = 0;
-
-    for (int i = 0; i < this->n; i++)
-    {
-        if (items.at(i))
-        {
-            profit += this->profits.at(i);
-            weight += this->weights.at(i);
-        }
-    }
-
-    return {profit, weight};
-}
-
-/*
-KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
-{
-    KPSolution newSolution;
-    double maxSolution = bestSolution.getValue();
-    vector<bool> bestSolutionItems = bestSolution.getItems();
-    bool isSolutionImproved = true;
-
-    while (isSolutionImproved)
-    {
-        isSolutionImproved = false;
-        for (int i = 0; i < this->n - 1; i++)
-        {
-            for (int j = i + 1; j < this->n; j++)
-            {
-                vector<bool> twoOptPoints, auxPoints;
-                for (int k = 0; k < i; k++)
-                {
-                    twoOptPoints.push_back(bestSolution.getItems().at(k));
-                }
-
-                for (int k = i; k < j; k++)
-                {
-                    auxPoints.push_back(bestSolution.getItems().at(k));
-                }
-
-                reverse(auxPoints.begin(), auxPoints.end());
-
-                for (int k = 0; k < auxPoints.size(); k++)
-                {
-                    twoOptPoints.push_back(auxPoints.at(k));
-                }
-
-                for (int k = j; k < this->n; k++)
-                {
-                    twoOptPoints.push_back(bestSolution.getItems().at(k));
-                }
-
-                double twoOptValue = getKnapsackSize(twoOptPoints);
-
-                newSolution.setItems(twoOptPoints);
-                newSolution.setValue(twoOptValue);
-
-                if (newSolution.getValue() > maxSolution)
-                {
-                    bestSolution = newSolution;
-                    maxSolution = bestSolution.getValue();
-
-                    isSolutionImproved = true;
-                }
-            }
-        }
-    }
-    return bestSolution;
-}
-
-KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
-{
-    KPSolution newSolution;
-    double minSolution = bestSolution.getValue();
-    bool isSolutionImproved = true;
-    int size = bestSolution.getItems().size();
-
-    while (isSolutionImproved)
-    {
-        isSolutionImproved = false;
-
-        for (int i = 0; i < size - 2; i++)
-        {
-            for (int j = i + 1; j < size - 1; j++)
-            {
-                for (int l = j + 1; l < size; l++)
-                {
-                    vector<pair<int, int>> a, b, c;
-                    for (int k = 0; k < i; k++)
-                    {
-                        a.push_back(bestSolution.getItems().at(k));
-                    }
-
-                    for (int k = i; k < j; k++)
-                    {
-                        b.push_back(bestSolution.getItems().at(k));
-                    }
-
-                    for (int k = j; k < l; k++)
-                    {
-                        c.push_back(bestSolution.getItems().at(k));
-                    }
-
-                    reverse(b.begin(), b.end());
-                    reverse(c.begin(), c.end());
-
-                    for (pair<int, int> k : c)
-                    {
-                        a.push_back(k);
-                    }
-
-                    for (pair<int, int> k : b)
-                    {
-                        a.push_back(k);
-                    }
-
-                    for (int k = l; k < size; k++)
-                    {
-                        a.push_back(bestSolution.getItems().at(k));
-                    }
-
-                    double threeOptValue = getCycleSize(a);
-
-                    newSolution.setPoints(a);
-                    newSolution.setValue(threeOptValue);
-
-                    if (newSolution.getValue() < minSolution)
-                    {
-                        bestSolution = newSolution;
-                        minSolution = bestSolution.getValue();
-
-                        isSolutionImproved = true;
-                    }
-                }
-            }
-        }
-    }
-    return bestSolution;
-}
-*/
-
 KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
 {
     KPSolution newBestSolution(bestSolution);
@@ -206,6 +79,7 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
 
     while (i < MAX_ITERATIONS)
     {
+        i++;
         vector<bool> newItemsPick = newBestSolution.getItems();
         int rand1, rand2;
 
@@ -220,7 +94,6 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
         newItemsPick.at(rand2) = aux;
 
         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
-        i++;
 
         if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
         {
@@ -240,6 +113,7 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
 
     while (i < MAX_ITERATIONS)
     {
+        i++;
         int not1, not2, yes;
         while (true)
         {
@@ -279,6 +153,57 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
             newBestSolution.setValue(knapsackDetails.first);
             newBestSolution.setWeight(knapsackDetails.second);
         }
+    }
+
+    return newBestSolution;
+}
+
+KPSolution VND::getDropTwoAddOne(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+    int i = 0;
+
+    while (i < MAX_ITERATIONS)
+    {
+        int yes1, yes2, no;
+        while (true)
+        {
+            yes1 = rand() % this->n;
+            if (newBestSolution.getItems().at(yes1))
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            yes2 = rand() % this->n;
+            if (newBestSolution.getItems().at(yes2) && yes2 != yes1)
+            {
+                break;
+            }
+        }
+        while (true)
+        {
+            no = rand() % this->n;
+            if (!newBestSolution.getItems().at(no))
+            {
+                break;
+            }
+        }
+
+        vector<bool> newItemsPick = newBestSolution.getItems();
+        newItemsPick.at(yes1) = false;
+        newItemsPick.at(yes2) = false;
+        newItemsPick.at(no) = true;
+
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+        }
 
         i++;
     }
@@ -288,28 +213,29 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
 
 int VND::calculate()
 {
-    KPSolution initialSolution = this->getRandomSolution();
+    KPSolution actualSolution = this->getRandomSolution();
 
-    KPSolution solution(initialSolution.getItems(),
-                        initialSolution.getValue(),
-                        initialSolution.getWeight());
+    KPSolution bestSolution(actualSolution);
     int k = 0;
-    double maxSolution = solution.getValue();
 
     while (k < MAX_ATTEMPTS)
     {
         if (k == 0)
         {
-            solution = this->getAddOneDropOne(solution);
+            actualSolution = this->getAddOneDropOne(actualSolution);
+        }
+        else if (k == 1)
+        {
+            actualSolution = this->getAddTwoDropOne(actualSolution);
         }
         else
         {
-            solution = this->getAddTwoDropOne(solution);
+            actualSolution = this->getDropTwoAddOne(actualSolution);
         }
 
-        if (solution.getValue() > maxSolution)
+        if (actualSolution.getValue() > bestSolution.getValue())
         {
-            maxSolution = solution.getValue();
+            bestSolution = actualSolution;
             k = 0;
         }
         else
@@ -318,5 +244,5 @@ int VND::calculate()
         }
     }
 
-    return solution.getValue();
+    return bestSolution.getValue();
 }

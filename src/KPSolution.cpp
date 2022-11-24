@@ -9,9 +9,7 @@ KPSolution::KPSolution(vector<bool> items, int solution, int weight)
     this->weight = weight;
 }
 
-KPSolution::~KPSolution()
-{
-}
+KPSolution::~KPSolution() {}
 
 void KPSolution::setItems(vector<bool> items)
 {

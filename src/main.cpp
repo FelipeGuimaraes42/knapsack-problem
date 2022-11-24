@@ -16,16 +16,6 @@ int main(int argc, char **argv)
      InputFile file(argv[1]);
      file.readFile();
 
-     // DynamicProgramming dp;
-     // int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
-     //                           file.getWeights(), file.getProfits());
-
-     // cout << "Dynamic Programming\n"
-     //      << "Number of Items: " << file.getNumberOfItems() << "\n"
-     //      << "Knapsack Size: " << file.getMaxWeight() << "\n"
-     //      << "Profit: " << result << "\n"
-     //      << endl;
-
      RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
                          file.getWeights(), file.getProfits());
 
@@ -37,8 +27,7 @@ int main(int argc, char **argv)
           << "Profit: " << result << "\n"
           << endl;
 
-     VND vnd(file.getMaxWeight(), file.getNumberOfItems(),
-             file.getWeights(), file.getProfits());
+     VND vnd(file.getMaxWeight(), file.getNumberOfItems(), file.getWeights(), file.getProfits());
      result = vnd.calculate();
 
      cout << "VND\n"
@@ -49,9 +38,12 @@ int main(int argc, char **argv)
      return 0;
 }
 
-// vector<pair<int, double>> a = rg.getSortedProfitsByWeight();
-// for (int i = 0; i < a.size(); i++)
-// {
-//     cout << a.at(i).first << "-" << a.at(i).second << "   ";
-// }
-// cout << endl;
+// DynamicProgramming dp;
+// int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
+//                           file.getWeights(), file.getProfits());
+
+// cout << "Dynamic Programming\n"
+//      << "Number of Items: " << file.getNumberOfItems() << "\n"
+//      << "Knapsack Size: " << file.getMaxWeight() << "\n"
+//      << "Profit: " << result << "\n"
+//      << endl;

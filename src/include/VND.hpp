@@ -7,8 +7,8 @@
 #include "KPSolution.hpp"
 
 #define INF 0x3f3f3f3f
-#define MAX_ATTEMPTS 2
-#define MAX_ITERATIONS 10000
+#define MAX_ATTEMPTS 3
+#define MAX_ITERATIONS 1000
 
 using namespace std;
 
@@ -20,11 +20,12 @@ private:
     vector<int> profits;
     vector<int> weights;
 
-    KPSolution getInitialSolution();
+    KPSolution getEmptyKnapsack();
     KPSolution getRandomSolution();
     pair<int, int> getKnapsackDetails(vector<bool>);
     KPSolution getAddOneDropOne(KPSolution previousSolution);
     KPSolution getAddTwoDropOne(KPSolution previousSolution);
+    KPSolution getDropTwoAddOne(KPSolution previousSolution);
 
 public:
     VND(int maxWeight, int n, vector<int> weights, vector<int> profits);
