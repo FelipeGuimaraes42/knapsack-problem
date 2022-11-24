@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cmath>
+#include <set>
 #include <string>
 #include <time.h>
 #include <vector>
@@ -7,7 +8,7 @@
 
 #define INF 0x3f3f3f3f
 #define MAX_ATTEMPTS 2
-#define MAX_ITERATIONS 100
+#define MAX_ITERATIONS 10000
 
 using namespace std;
 

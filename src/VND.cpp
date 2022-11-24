@@ -26,21 +26,31 @@ KPSolution VND::getInitialSolution()
 KPSolution VND::getRandomSolution()
 {
     vector<bool> items;
-    int solution = 0;
-    int weight = 0;
+    int solution;
+    int weight;
+    set<int> differentPicks;
 
-    for (int i = 0; i < this->n; i++)
+    do
     {
-        int randomBool = rand() % 2;
-        items.push_back(randomBool);
-        int aux = weight + this->weights.at(i);
+        solution = 0;
+        weight = 0;
+        differentPicks.clear();
 
-        if (randomBool && aux <= this->maxWeight)
+        for (int i = 0; i < this->n; i++)
         {
-            solution += this->profits.at(i);
-            weight = aux;
+            int randomBool = rand() % 2;
+            differentPicks.insert(randomBool * i);
+            items.push_back(randomBool);
+            int aux = weight + this->weights.at(i);
+
+            if (randomBool && aux <= this->maxWeight)
+            {
+                solution += this->profits.at(i);
+                weight = aux;
+            }
         }
-    }
+
+    } while (differentPicks.size() < this->n / 3);
 
     return KPSolution(items, solution, weight);
 }
@@ -197,18 +207,20 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
     while (i < MAX_ITERATIONS)
     {
         vector<bool> newItemsPick = newBestSolution.getItems();
-        int rand1 = rand() % this->n;
-        int rand2 = rand() % this->n;
+        int rand1, rand2;
 
-        if (newItemsPick.at(rand1) != newItemsPick.at(rand2))
+        do
         {
-            i++;
-        }
+            rand1 = rand() % this->n;
+            rand2 = rand() % this->n;
+        } while (newItemsPick.at(rand1) == newItemsPick.at(rand2));
 
         bool aux = newItemsPick.at(rand1);
         newItemsPick.at(rand1) = newItemsPick.at(rand2);
         newItemsPick.at(rand2) = aux;
+
         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+        i++;
 
         if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
         {
@@ -232,21 +244,24 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
         while (true)
         {
             not1 = rand() % this->n;
-            if(!newBestSolution.getItems().at(not1)){
+            if (!newBestSolution.getItems().at(not1))
+            {
                 break;
             }
         }
         while (true)
         {
             not2 = rand() % this->n;
-            if(!newBestSolution.getItems().at(not2)){
+            if (!newBestSolution.getItems().at(not2) && not2 != not1)
+            {
                 break;
             }
         }
         while (true)
         {
             yes = rand() % this->n;
-            if(newBestSolution.getItems().at(yes)){
+            if (newBestSolution.getItems().at(yes))
+            {
                 break;
             }
         }
@@ -254,7 +269,7 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
         vector<bool> newItemsPick = newBestSolution.getItems();
         newItemsPick.at(not1) = true;
         newItemsPick.at(not2) = true;
-        newItemsPick.at(yes) = true;
+        newItemsPick.at(yes) = false;
 
         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
 

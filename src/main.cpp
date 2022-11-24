@@ -11,41 +11,42 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    srand(time(NULL));
-    
-    InputFile file(argv[1]);
-    file.readFile();
+     srand(time(NULL));
 
-    // DynamicProgramming dp;
-    // int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
-    //                           file.getWeights(), file.getProfits());
+     InputFile file(argv[1]);
+     file.readFile();
 
-    // cout << "Dynamic Programming\n"
-    //      << "Number of Items: " << file.getNumberOfItems() << "\n"
-    //      << "Knapsack Size: " << file.getMaxWeight() << "\n"
-    //      << "Profit: " << result << "\n"
-    //      << endl;
+     // DynamicProgramming dp;
+     // int result = dp.calculate(file.getMaxWeight(), file.getNumberOfItems(),
+     //                           file.getWeights(), file.getProfits());
 
-    RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
-                        file.getWeights(), file.getProfits());
+     // cout << "Dynamic Programming\n"
+     //      << "Number of Items: " << file.getNumberOfItems() << "\n"
+     //      << "Knapsack Size: " << file.getMaxWeight() << "\n"
+     //      << "Profit: " << result << "\n"
+     //      << endl;
 
-    int result = rg.calculate();
+     RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
+                         file.getWeights(), file.getProfits());
 
-    cout << "Randomized Greedy\n"
-         << "Number of Items: " << file.getNumberOfItems() << "\n"
-         << "Knapsack Size: " << file.getMaxWeight() << "\n"
-         << "Profit: " << result << endl;
+     int result = rg.calculate();
 
-    VND vnd(file.getMaxWeight(), file.getNumberOfItems(),
-            file.getWeights(), file.getProfits());
-    result = vnd.calculate();
+     cout << "Randomized Greedy\n"
+          << "Number of Items: " << file.getNumberOfItems() << "\n"
+          << "Knapsack Size: " << file.getMaxWeight() << "\n"
+          << "Profit: " << result << "\n"
+          << endl;
 
-    cout << "VND\n"
-         << "Number of Items: " << file.getNumberOfItems() << "\n"
-         << "Knapsack Size: " << file.getMaxWeight() << "\n"
-         << "Profit: " << result << endl;
+     VND vnd(file.getMaxWeight(), file.getNumberOfItems(),
+             file.getWeights(), file.getProfits());
+     result = vnd.calculate();
 
-    return 0;
+     cout << "VND\n"
+          << "Number of Items: " << file.getNumberOfItems() << "\n"
+          << "Knapsack Size: " << file.getMaxWeight() << "\n"
+          << "Profit: " << result << endl;
+
+     return 0;
 }
 
 // vector<pair<int, double>> a = rg.getSortedProfitsByWeight();
