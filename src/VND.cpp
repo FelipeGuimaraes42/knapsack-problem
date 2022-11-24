@@ -45,7 +45,7 @@ KPSolution VND::getRandomSolution()
     return KPSolution(items, solution, weight);
 }
 
-int VND::getKnapsackSize(vector<bool> items)
+pair<int, int> VND::getKnapsackDetails(vector<bool> items)
 {
     int profit = 0;
     int weight = 0;
@@ -59,9 +59,10 @@ int VND::getKnapsackSize(vector<bool> items)
         }
     }
 
-    return weight;
+    return {profit, weight};
 }
 
+/*
 KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
 {
     KPSolution newSolution;
@@ -117,7 +118,6 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
     return bestSolution;
 }
 
-/*
 KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
 {
     KPSolution newSolution;
@@ -189,6 +189,88 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
 }
 */
 
+KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+    int i = 0;
+
+    while (i < MAX_ITERATIONS)
+    {
+        vector<bool> newItemsPick = newBestSolution.getItems();
+        int rand1 = rand() % this->n;
+        int rand2 = rand() % this->n;
+
+        if (newItemsPick.at(rand1) != newItemsPick.at(rand2))
+        {
+            i++;
+        }
+
+        bool aux = newItemsPick.at(rand1);
+        newItemsPick.at(rand1) = newItemsPick.at(rand2);
+        newItemsPick.at(rand2) = aux;
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+        }
+    }
+
+    return newBestSolution;
+}
+
+KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+    int i = 0;
+
+    while (i < MAX_ITERATIONS)
+    {
+        int not1, not2, yes;
+        while (true)
+        {
+            not1 = rand() % this->n;
+            if(!newBestSolution.getItems().at(not1)){
+                break;
+            }
+        }
+        while (true)
+        {
+            not2 = rand() % this->n;
+            if(!newBestSolution.getItems().at(not2)){
+                break;
+            }
+        }
+        while (true)
+        {
+            yes = rand() % this->n;
+            if(newBestSolution.getItems().at(yes)){
+                break;
+            }
+        }
+
+        vector<bool> newItemsPick = newBestSolution.getItems();
+        newItemsPick.at(not1) = true;
+        newItemsPick.at(not2) = true;
+        newItemsPick.at(yes) = true;
+
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+        }
+
+        i++;
+    }
+
+    return newBestSolution;
+}
+
 int VND::calculate()
 {
     KPSolution initialSolution = this->getRandomSolution();
@@ -199,15 +281,15 @@ int VND::calculate()
     int k = 0;
     double maxSolution = solution.getValue();
 
-    while (k < MAX_TENTATIVES)
+    while (k < MAX_ATTEMPTS)
     {
         if (k == 0)
         {
-            // solution = this->getAddOneDropOne(solution);
+            solution = this->getAddOneDropOne(solution);
         }
         else
         {
-            // solution = this->getAddTwoDropOne(solution);
+            solution = this->getAddTwoDropOne(solution);
         }
 
         if (solution.getValue() > maxSolution)

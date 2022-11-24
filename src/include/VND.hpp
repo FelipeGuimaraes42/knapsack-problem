@@ -6,7 +6,8 @@
 #include "KPSolution.hpp"
 
 #define INF 0x3f3f3f3f
-#define MAX_TENTATIVES 2
+#define MAX_ATTEMPTS 2
+#define MAX_ITERATIONS 100
 
 using namespace std;
 
@@ -20,7 +21,7 @@ private:
 
     KPSolution getInitialSolution();
     KPSolution getRandomSolution();
-    int getKnapsackSize(vector<bool>);
+    pair<int, int> getKnapsackDetails(vector<bool>);
     KPSolution getAddOneDropOne(KPSolution previousSolution);
     KPSolution getAddTwoDropOne(KPSolution previousSolution);
 
