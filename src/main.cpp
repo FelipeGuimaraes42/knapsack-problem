@@ -16,24 +16,23 @@ int main(int argc, char **argv)
      InputFile file(argv[1]);
      file.readFile();
 
+     cout << "Knapasack Details\n"
+          << " - Number Of Items: " << file.getNumberOfItems() << "\n"
+          << " - Max Weight: " << file.getMaxWeight() << "\n"
+          << endl;
+
      RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
                          file.getWeights(), file.getProfits());
 
      int result = rg.calculate();
 
-     cout << "Randomized Greedy\n"
-          << "Number of Items: " << file.getNumberOfItems() << "\n"
-          << "Knapsack Size: " << file.getMaxWeight() << "\n"
-          << "Profit: " << result << "\n"
+     cout << "Randomized Greedy\n - Profit: " << result << "\n "
           << endl;
 
      VND vnd(file.getMaxWeight(), file.getNumberOfItems(), file.getWeights(), file.getProfits());
      result = vnd.calculate();
 
-     cout << "VND\n"
-          << "Number of Items: " << file.getNumberOfItems() << "\n"
-          << "Knapsack Size: " << file.getMaxWeight() << "\n"
-          << "Profit: " << result << endl;
+     cout << "VND\n - Profit: " << result << endl;
 
      return 0;
 }

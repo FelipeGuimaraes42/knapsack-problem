@@ -135,6 +135,7 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
             newBestSolution.setItems(newItemsPick);
             newBestSolution.setValue(knapsackDetails.first);
             newBestSolution.setWeight(knapsackDetails.second);
+            // cout << "value" << knapsackDetails.first << endl;
         }
     }
 
