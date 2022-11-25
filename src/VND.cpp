@@ -72,12 +72,47 @@ KPSolution VND::getRandomSolution()
     return KPSolution(items, solution, weight);
 }
 
+KPSolution VND::getAddOneDropNone(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+
+    bool isSolutionImproved = true;
+    int i = 0;
+    while (isSolutionImproved || i < MAX_ITERATIONS)
+    {
+        i++;
+        isSolutionImproved = false;
+        int random;
+
+        vector<bool> newItemsPick = newBestSolution.getItems();
+
+        do
+        {
+            random = rand() % this->n;
+        } while (newItemsPick.at(random));
+
+        newItemsPick.at(random) = true;
+
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+            isSolutionImproved = true;
+        }
+    }
+
+    return newBestSolution;
+}
+
 KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
 {
     KPSolution newBestSolution(bestSolution);
     int i = 0;
 
-    while (i < MAX_ITERATIONS)
+    while (i < this->n)
     {
         i++;
         vector<bool> newItemsPick = newBestSolution.getItems();
@@ -111,7 +146,7 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
     KPSolution newBestSolution(bestSolution);
     int i = 0;
 
-    while (i < MAX_ITERATIONS)
+    while (i < this->n)
     {
         i++;
         int not1, not2, yes;
@@ -163,7 +198,7 @@ KPSolution VND::getDropTwoAddOne(KPSolution bestSolution)
     KPSolution newBestSolution(bestSolution);
     int i = 0;
 
-    while (i < MAX_ITERATIONS)
+    while (i < this->n)
     {
         int yes1, yes2, no;
         while (true)
@@ -220,11 +255,15 @@ int VND::calculate()
 
     while (k < MAX_ATTEMPTS)
     {
-        if (k == 0)
+        if (k % MAX_ATTEMPTS == 0)
+        {
+            actualSolution = this->getAddOneDropNone(actualSolution);
+        }
+        else if (k % MAX_ATTEMPTS == 1)
         {
             actualSolution = this->getAddOneDropOne(actualSolution);
         }
-        else if (k == 1)
+        else if (k % MAX_ATTEMPTS == 2)
         {
             actualSolution = this->getAddTwoDropOne(actualSolution);
         }
