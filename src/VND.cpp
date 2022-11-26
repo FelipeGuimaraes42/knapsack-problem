@@ -10,7 +10,7 @@ VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
     this->profitsPerWeight.clear();
     for (int i = 0; i < n; i++)
     {
-        double ppw = (double)profits.at(i) / weights.at(i);
+        double ppw = (double)profits[i] / weights[i];
         this->profitsPerWeight.push_back({i, ppw});
     }
     sort(this->profitsPerWeight.begin(), this->profitsPerWeight.end(),
@@ -40,10 +40,10 @@ pair<int, int> VND::getKnapsackDetails(vector<bool> items)
 
     for (int i = 0; i < this->n; i++)
     {
-        if (items.at(i))
+        if (items[i])
         {
-            profit += this->profits.at(i);
-            weight += this->weights.at(i);
+            profit += this->profits[i];
+            weight += this->weights[i];
         }
     }
 
@@ -68,11 +68,11 @@ KPSolution VND::getRandomSolution()
             int randomBool = rand() % 2;
             differentPicks.insert(randomBool * i);
             items.push_back(randomBool);
-            int aux = weight + this->weights.at(i);
+            int aux = weight + this->weights[i];
 
             if (randomBool && aux <= this->maxWeight)
             {
-                solution += this->profits.at(i);
+                solution += this->profits[i];
                 weight = aux;
             }
         }
@@ -269,7 +269,7 @@ KPSolution VND::getAddOneDropOneByProfit(KPSolution bestSolution)
 
         do
         {
-            valuable = this->profitsPerWeight.at(i).first;
+            valuable = this->profitsPerWeight[i].first;
             i--;
         } while (newItemsPick.at(valuable) && i >= 0);
 
