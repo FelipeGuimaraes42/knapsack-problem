@@ -67,13 +67,17 @@ KPSolution VND::getRandomSolution()
         {
             int randomBool = rand() % 2;
             differentPicks.insert(randomBool * i);
-            items.push_back(randomBool);
             int aux = weight + this->weights[i];
 
             if (randomBool && aux <= this->maxWeight)
             {
+                items.push_back(1);
                 solution += this->profits[i];
                 weight = aux;
+            }
+            else
+            {
+                items.push_back(0);
             }
         }
 
