@@ -1,3 +1,6 @@
+#ifndef KP_SOLUTION_HPP
+#define KP_SOLUTION_HPP
+
 #include <vector>
 
 using namespace std;
@@ -22,3 +25,5 @@ public:
     int getValue();
     int getWeight();
 };
+
+#endif

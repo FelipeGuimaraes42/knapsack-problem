@@ -23,15 +23,15 @@ int main(int argc, char **argv)
 
      RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(), file.getWeights(), file.getProfits());
 
-     int result = rg.calculate();
+     KPSolution rgSolution = rg.calculate();
 
-     cout << "Randomized Greedy\n - Profit: " << result << "\n "
+     cout << "Randomized Greedy\n - Profit: " << rgSolution.getValue() << "\n - Weight: " << rgSolution.getWeight() << "\n"
           << endl;
 
      VND vnd(file.getMaxWeight(), file.getNumberOfItems(), file.getWeights(), file.getProfits());
-     result = vnd.calculate();
+     KPSolution vndSolution = vnd.calculate();
 
-     cout << "VND\n - Profit: " << result << endl;
+     cout << "VND\n - Profit: " << vndSolution.getValue() << "\n - Weight: " << vndSolution.getWeight() << endl;
 
      return 0;
 }

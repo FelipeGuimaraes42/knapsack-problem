@@ -3,6 +3,7 @@
 #include <string>
 #include <time.h>
 #include <vector>
+#include "KPSolution.hpp"
 
 using namespace std;
 
@@ -20,6 +21,6 @@ public:
     RandomizedGreedy(int maxWeight, int n, vector<int> weights, vector<int> profits);
     ~RandomizedGreedy();
 
-    int calculate();
+    KPSolution calculate();
     vector<pair<int, double>> getSortedProfitsByWeight();
 };

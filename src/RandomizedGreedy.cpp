@@ -12,9 +12,7 @@ RandomizedGreedy::RandomizedGreedy(int maxWeight, int n, vector<int> weights, ve
     {
         double profitByWeight = (double)profits.at(i) / weights.at(i);
         this->sortedProfitsByWeight.push_back({i, profitByWeight});
-        // cout << profitByWeight << "   ";
     }
-    // cout << endl;
 
     sort(this->sortedProfitsByWeight.begin(), this->sortedProfitsByWeight.end(),
          [](auto &left, auto &right)
@@ -35,7 +33,7 @@ void RandomizedGreedy::removeItem(int position)
     this->sortedProfitsByWeight.erase(it);
 }
 
-int RandomizedGreedy::calculate()
+KPSolution RandomizedGreedy::calculate()
 {
     int result = 0;
     int weight = 0;
@@ -56,25 +54,18 @@ int RandomizedGreedy::calculate()
         removeItem(index);
         n--;
     }
-    
+
     int aux = weight + this->weights.at(this->sortedProfitsByWeight.at(0).first);
 
     if (aux <= this->maxWeight)
     {
+        weight = aux;
         result += this->profits.at(this->sortedProfitsByWeight.at(0).first);
     }
 
-    return result;
+    KPSolution solution;
+    solution.setValue(result);
+    solution.setWeight(weight);
+
+    return solution;
 }
-
-// if (!this->sortedProfitsByWeight.empty())
-//     {
-//         cout << "Entrei aqui!! Tamanho da lista: " << this->sortedProfitsByWeight.size() << endl;
-//         int aux = weight + this->weights.at(this->sortedProfitsByWeight.at(0).first);
-
-//         if (aux <= this->maxWeight)
-//         {
-//             result += this->profits.at(this->sortedProfitsByWeight.at(0).first);
-//             weight = aux;
-//         }
-//     }

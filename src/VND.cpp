@@ -91,21 +91,17 @@ KPSolution VND::getAddOneDropNone(KPSolution bestSolution)
     KPSolution newBestSolution(bestSolution);
 
     bool isSolutionImproved = true;
-    int i = 0;
-    while (isSolutionImproved || i < MAX_ITERATIONS)
+    int i = this->n;
+    while (i > 0)
     {
-        i++;
-        isSolutionImproved = false;
-        int random;
-
         vector<bool> newItemsPick = newBestSolution.getItems();
 
         do
         {
-            random = rand() % this->n;
-        } while (newItemsPick.at(random));
+            i--;
+        } while (i > 0 && newItemsPick.at(this->profitsPerWeight.at(i).first));
 
-        newItemsPick.at(random) = true;
+        newItemsPick.at(i) = true;
 
         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
 
@@ -149,7 +145,6 @@ KPSolution VND::getAddOneDropOne(KPSolution bestSolution)
             newBestSolution.setItems(newItemsPick);
             newBestSolution.setValue(knapsackDetails.first);
             newBestSolution.setWeight(knapsackDetails.second);
-            // cout << "value" << knapsackDetails.first << endl;
         }
     }
 
@@ -208,14 +203,16 @@ KPSolution VND::getAddTwoDropOne(KPSolution bestSolution)
     return newBestSolution;
 }
 
-KPSolution VND::getDropTwoAddOne(KPSolution bestSolution)
+KPSolution VND::getAddOneDropTwo(KPSolution bestSolution)
 {
     KPSolution newBestSolution(bestSolution);
     int i = 0;
 
     while (i < this->n)
     {
+        i++;
         int yes1, yes2, no;
+
         while (true)
         {
             yes1 = rand() % this->n;
@@ -254,8 +251,6 @@ KPSolution VND::getDropTwoAddOne(KPSolution bestSolution)
             newBestSolution.setValue(knapsackDetails.first);
             newBestSolution.setWeight(knapsackDetails.second);
         }
-
-        i++;
     }
 
     return newBestSolution;
@@ -282,9 +277,8 @@ KPSolution VND::getAddOneDropOneByProfit(KPSolution bestSolution)
             random = rand() % this->n;
         } while (!newItemsPick.at(random) && random == valuable);
 
-        bool aux = newItemsPick.at(random);
-        newItemsPick.at(random) = newItemsPick.at(valuable);
-        newItemsPick.at(valuable) = aux;
+        newItemsPick.at(random) = false;
+        newItemsPick.at(valuable) = true;
 
         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
 
@@ -299,7 +293,53 @@ KPSolution VND::getAddOneDropOneByProfit(KPSolution bestSolution)
     return newBestSolution;
 }
 
-int VND::calculate()
+KPSolution VND::getAddOneDropTwoByProfit(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+    int i = n - 1;
+    int j = 0;
+
+    while (i >= 0 && j < this->n)
+    {
+        vector<bool> newItemsPick = newBestSolution.getItems();
+        int notValuable1, notValuable2, valuable;
+
+        do
+        {
+            valuable = this->profitsPerWeight[i].first;
+            i--;
+        } while (newItemsPick.at(valuable) && i >= 0);
+
+        do
+        {
+            notValuable1 = this->profitsPerWeight[j].first;
+            j++;
+        } while (!newItemsPick.at(notValuable1) && notValuable1 == valuable);
+
+        do
+        {
+            notValuable2 = this->profitsPerWeight[j].first;
+            j++;
+        } while (!newItemsPick.at(notValuable2) && notValuable1 == notValuable2);
+
+        newItemsPick.at(notValuable1) = false;
+        newItemsPick.at(notValuable2) = false;
+        newItemsPick.at(valuable) = true;
+
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+        }
+    }
+
+    return newBestSolution;
+}
+
+KPSolution VND::calculate()
 {
     KPSolution actualSolution = this->getRandomSolution();
 
@@ -310,23 +350,27 @@ int VND::calculate()
     {
         if (k == 0)
         {
-            actualSolution = this->getAddOneDropNone(actualSolution);
+            actualSolution = this->getAddOneDropOne(actualSolution);
         }
         else if (k == 1)
         {
-            actualSolution = this->getAddOneDropOne(actualSolution);
+            actualSolution = this->getAddTwoDropOne(actualSolution);
         }
         else if (k == 2)
         {
-            actualSolution = this->getAddTwoDropOne(actualSolution);
+            actualSolution = this->getAddOneDropTwo(actualSolution);
         }
         else if (k == 3)
         {
-            actualSolution = this->getDropTwoAddOne(actualSolution);
+            actualSolution = this->getAddOneDropOneByProfit(actualSolution);
+        }
+        else if (k == 4)
+        {
+            actualSolution = this->getAddOneDropTwoByProfit(actualSolution);
         }
         else
         {
-            actualSolution = this->getAddOneDropOneByProfit(actualSolution);
+            actualSolution = this->getAddOneDropNone(actualSolution);
         }
 
         if (actualSolution.getValue() > bestSolution.getValue())
@@ -340,13 +384,69 @@ int VND::calculate()
         }
     }
 
-    // cout << bestSolution.getValue() << " " << bestSolution.getWeight() << endl;
-    // for (bool item : bestSolution.getItems())
-    // {
-    //     cout << item << " ";
-    // }
-    // cout << endl;
-    // cout << getKnapsackDetails(bestSolution.getItems()).first << endl;
-
-    return bestSolution.getValue();
+    return bestSolution;
 }
+
+// cout << bestSolution.getValue() << " " << bestSolution.getWeight() << endl;
+// for (bool item : bestSolution.getItems())
+// {
+//     cout << item << " ";
+// }
+// cout << endl;
+// cout << getKnapsackDetails(bestSolution.getItems()).first << endl;
+
+// if (k == 0)
+// {
+//     actualSolution = this->getAddOneDropNone(actualSolution);
+// }
+// else if (k == 1)
+// {
+//     actualSolution = this->getAddOneDropOne(actualSolution);
+// }
+// else if (k == 2)
+// {
+//     actualSolution = this->getAddTwoDropOne(actualSolution);
+// }
+// else if (k == 3)
+// {
+//     actualSolution = this->getDropTwoAddOne(actualSolution);
+// }
+// else
+// {
+//     actualSolution = this->getAddOneDropOneByProfit(actualSolution);
+// }
+
+// KPSolution VND::getAddOneDropNone(KPSolution bestSolution)
+// {
+//     KPSolution newBestSolution(bestSolution);
+
+//     bool isSolutionImproved = true;
+//     int i = 0;
+//     while (isSolutionImproved || i < MAX_ITERATIONS)
+//     {
+//         i++;
+//         isSolutionImproved = false;
+//         int random;
+
+//         vector<bool> newItemsPick = newBestSolution.getItems();
+
+//         do
+//         {
+//             random = rand() % this->n;
+//         } while (newItemsPick.at(random));
+
+//         newItemsPick.at(random) = true;
+
+//         pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+//         if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+//         {
+//             newBestSolution.setItems(newItemsPick);
+//             newBestSolution.setValue(knapsackDetails.first);
+//             newBestSolution.setWeight(knapsackDetails.second);
+//             isSolutionImproved = true;
+//         }
+//     }
+
+//     return newBestSolution;
+// }
