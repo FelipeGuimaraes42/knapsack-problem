@@ -21,8 +21,7 @@ int main(int argc, char **argv)
           << " - Max Weight: " << file.getMaxWeight() << "\n"
           << endl;
 
-     RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(),
-                         file.getWeights(), file.getProfits());
+     RandomizedGreedy rg(file.getMaxWeight(), file.getNumberOfItems(), file.getWeights(), file.getProfits());
 
      int result = rg.calculate();
 

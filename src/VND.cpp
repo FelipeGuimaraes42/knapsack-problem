@@ -11,8 +11,11 @@ VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
     for (int i = 0; i < n; i++)
     {
         double ppw = (double)profits.at(i) / weights.at(i);
-        this->profitsPerWeight.push_back(ppw);
+        this->profitsPerWeight.push_back({i, ppw});
     }
+    sort(this->profitsPerWeight.begin(), this->profitsPerWeight.end(),
+         [](auto &left, auto &right)
+         { return left.second < right.second; });
 }
 
 VND::~VND() {}
@@ -254,6 +257,44 @@ KPSolution VND::getDropTwoAddOne(KPSolution bestSolution)
     return newBestSolution;
 }
 
+KPSolution VND::getAddOneDropOneByProfit(KPSolution bestSolution)
+{
+    KPSolution newBestSolution(bestSolution);
+    int i = n - 1;
+
+    while (i >= 0)
+    {
+        vector<bool> newItemsPick = newBestSolution.getItems();
+        int random, valuable;
+
+        do
+        {
+            valuable = this->profitsPerWeight.at(i).first;
+            i--;
+        } while (newItemsPick.at(valuable) && i >= 0);
+
+        do
+        {
+            random = rand() % this->n;
+        } while (!newItemsPick.at(random) && random == valuable);
+
+        bool aux = newItemsPick.at(random);
+        newItemsPick.at(random) = newItemsPick.at(valuable);
+        newItemsPick.at(valuable) = aux;
+
+        pair<int, int> knapsackDetails = getKnapsackDetails(newItemsPick);
+
+        if (knapsackDetails.first > newBestSolution.getValue() && knapsackDetails.second <= this->maxWeight)
+        {
+            newBestSolution.setItems(newItemsPick);
+            newBestSolution.setValue(knapsackDetails.first);
+            newBestSolution.setWeight(knapsackDetails.second);
+        }
+    }
+
+    return newBestSolution;
+}
+
 int VND::calculate()
 {
     KPSolution actualSolution = this->getRandomSolution();
@@ -263,21 +304,25 @@ int VND::calculate()
 
     while (k < MAX_ATTEMPTS)
     {
-        if (k % MAX_ATTEMPTS == 0)
+        if (k == 0)
         {
             actualSolution = this->getAddOneDropNone(actualSolution);
         }
-        else if (k % MAX_ATTEMPTS == 1)
+        else if (k == 1)
         {
             actualSolution = this->getAddOneDropOne(actualSolution);
         }
-        else if (k % MAX_ATTEMPTS == 2)
+        else if (k == 2)
         {
             actualSolution = this->getAddTwoDropOne(actualSolution);
         }
-        else
+        else if (k == 3)
         {
             actualSolution = this->getDropTwoAddOne(actualSolution);
+        }
+        else
+        {
+            actualSolution = this->getAddOneDropOneByProfit(actualSolution);
         }
 
         if (actualSolution.getValue() > bestSolution.getValue())
@@ -290,6 +335,14 @@ int VND::calculate()
             k++;
         }
     }
+
+    // cout << bestSolution.getValue() << " " << bestSolution.getWeight() << endl;
+    // for (bool item : bestSolution.getItems())
+    // {
+    //     cout << item << " ";
+    // }
+    // cout << endl;
+    // cout << getKnapsackDetails(bestSolution.getItems()).first << endl;
 
     return bestSolution.getValue();
 }
