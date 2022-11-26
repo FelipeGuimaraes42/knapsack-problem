@@ -6,6 +6,13 @@ VND::VND(int maxWeight, int n, vector<int> weights, vector<int> profits)
     this->maxWeight = maxWeight;
     this->profits = profits;
     this->weights = weights;
+
+    this->profitsPerWeight.clear();
+    for (int i = 0; i < n; i++)
+    {
+        double ppw = (double)profits.at(i) / weights.at(i);
+        this->profitsPerWeight.push_back(ppw);
+    }
 }
 
 VND::~VND() {}

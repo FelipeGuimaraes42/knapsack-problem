@@ -18,6 +18,8 @@ private:
     int maxWeight;
     vector<int> profits;
     vector<int> weights;
+    vector<double> profitsPerWeight;
+    
     pair<int, int> getKnapsackDetails(vector<bool>);
 
     KPSolution getEmptyKnapsack();
