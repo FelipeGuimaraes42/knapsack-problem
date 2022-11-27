@@ -4,7 +4,7 @@
 
 ## About
 In this project, we solve the NP-Complete Knapsack Problem using the metaheuristic Variable Neighborhood Descent (VND).
-As the control heuristic, we are using Randomized Greedy.
+To the control heuristic, we use Randomized Greedy.
 
 ## How to run
 To run this project, you need to do three things:
