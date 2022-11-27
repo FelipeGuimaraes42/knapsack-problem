@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
 #include "include/DynamicProgramming.hpp"
 #include "include/InputFile.hpp"
 #include "include/RandomizedGreedy.hpp"
@@ -15,7 +16,7 @@ int main(int argc, char **argv)
      InputFile file(argv[1]);
      file.readFile();
 
-     cout << "Knapasack Details\n"
+     cout << "Knapsack Details\n"
           << " - Number Of Items: " << file.getNumberOfItems() << "\n"
           << " - Max Weight: " << file.getMaxWeight() << "\n"
           << endl;

@@ -1,6 +1,9 @@
 compile:
 	cd src && g++ -std=c++17 -o main main.cpp InputFile.cpp DynamicProgramming.cpp RandomizedGreedy.cpp VND.cpp KPSolution.cpp
 
+run: 
+	cd src && ./main test-cases/low-dimensional/f1_l-d_kp_10_269
+
 runLow:
 	cd src && ./main test-cases/low-dimensional/f1_l-d_kp_10_269
 

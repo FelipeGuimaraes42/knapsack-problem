@@ -2,13 +2,11 @@
 #include <iostream>
 #include <set>
 #include <string>
-#include <time.h>
 #include <vector>
 #include "KPSolution.hpp"
 
 #define INF 0x3f3f3f3f
 #define MAX_ATTEMPTS 6
-#define MAX_ITERATIONS 100
 
 using namespace std;
 
