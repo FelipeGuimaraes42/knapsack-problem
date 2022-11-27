@@ -24,7 +24,7 @@ To make this process simpler, we created a **Makefile**. In this Makefile, he al
 ## Output
 After running the project, it will print the results in the console.
 
-It will first three things:
+It will print three things:
 - Knapsack details;
 - Randomized Greedy solution, profit and weight;
 - VND solution, profit and weight.
