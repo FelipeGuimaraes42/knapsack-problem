@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "include/combo.h"
 #include "include/DynamicProgramming.hpp"
 #include "include/InputFile.hpp"
 #include "include/RandomizedGreedy.hpp"
